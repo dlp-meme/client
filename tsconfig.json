@@ -1,0 +1,20 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "strict": true
+  },
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    },
+    {
+      "path": "./nightwatch/tsconfig.json"
+    }
+  ]
+}
