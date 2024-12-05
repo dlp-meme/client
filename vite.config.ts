@@ -20,8 +20,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern',
-        prependData: '@use "@app/styles/_variables.scss";\n',
+        api: 'modern-compiler',
+        prependData: '@use "@app/styles/_variables.scss" as *;\n',
       },
     },
   },

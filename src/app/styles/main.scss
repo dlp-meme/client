@@ -1,3 +1,35 @@
+@use "@app/styles/_variables.scss" as *;
+
+[data-theme="dark"] {
+  @each $name, $color in $dark {
+    --#{$name}-color: #{$color};
+  }
+}
+
+[data-theeme="light"] {
+  @each $name, $color in $light {
+    --#{$name}-color: #{$color};
+  }
+}
+
+* {
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+
 body {
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+
   margin: 0;
+  position: relative;
+
+  background-color: var(--base-color);
+}
+
+#app {
+  width: 100%;
+  height: 100%;
 }
