@@ -1,18 +1,10 @@
 @use "@app/styles/_variables.scss" as *;
 
-[data-theme="dark"] {
-  @each $name, $color in $dark {
-    --#{$name}-color: #{$color};
-  }
-}
-
-[data-theeme="light"] {
-  @each $name, $color in $light {
-    --#{$name}-color: #{$color};
-  }
-}
-
 * {
+  @each $name, $color in $colors {
+    --#{$name}-color: #{$color};
+  }
+
   color: var(--text-color);
   box-sizing: border-box;
 }

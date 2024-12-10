@@ -1,17 +1,5 @@
 <script setup lang="ts">
-import MoonStarsIcon from '@vicons/tabler/MoonStars';
-import SunIcon from '@vicons/tabler/Sun';
-import { useDark } from '@vueuse/core';
-import { NAvatar, NButton, NIcon } from 'naive-ui';
-import { computed } from 'vue';
-
-const isDark = useDark();
-
-const themeSwitcherIcon = computed(() => (isDark.value ? MoonStarsIcon : SunIcon));
-
-const toggleTheme = () => {
-  isDark.value = !isDark.value;
-}
+import { NAvatar } from 'naive-ui';
 </script>
 
 <template>
@@ -19,12 +7,6 @@ const toggleTheme = () => {
     <n-avatar class="app-header__logo" size="medium" src="/dlp-meme.png" />
 
     <div class="app-header__search"></div>
-
-    <n-button class="app-header__theme-switcher" quaternary circle @click="toggleTheme">
-      <n-icon size="24">
-        <component :is="themeSwitcherIcon" />
-      </n-icon>
-    </n-button>
   </div>
 </template>
 
@@ -43,10 +25,6 @@ const toggleTheme = () => {
 
   &__search {
     flex-grow: 1;
-  }
-
-  &__theme-switcher {
-    flex-shrink: 0;
   }
 }
 </style>
