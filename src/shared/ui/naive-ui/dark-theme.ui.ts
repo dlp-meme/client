@@ -9,5 +9,9 @@ export const darkTheme: GlobalThemeOverrides = {
     textColorBase: flavors.mocha.colors.text.hex,
     borderColor: flavors.mocha.colors.overlay0.hex,
     baseColor: flavors.mocha.colors.base.hex,
+  },
+  Scrollbar: {
+    color: flavors.mocha.colors.surface0.hex,
+    colorHover: flavors.mocha.colors.surface2.hex,
   }
 }

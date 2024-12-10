@@ -3,10 +3,10 @@ import '@app/styles/main.scss';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 
-import App from '@/app/app.vue';
+import ConfigProvider from '@app/config-provider.vue';
 import router from '@app/router';
 
-const app = createApp(App);
+const app = createApp(ConfigProvider);
 
 app.use(createPinia());
 app.use(router);
