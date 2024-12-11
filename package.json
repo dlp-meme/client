@@ -1,9 +1,10 @@
 {
-  "name": "dlp-mem-admin",
+  "name": "dlp-meme",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "tauri": "tauri",
     "dev": "vite",
     "dev:desktop": "tauri dev",
     "build:desktop": "tauri build",
