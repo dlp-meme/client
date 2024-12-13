@@ -1,4 +1,4 @@
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 
 use crate::infrastracture::sqlite::abstracts::{
     repositories::config::{GetConfigResult, IConfigRepository, UpdateConfigResult},
@@ -6,26 +6,18 @@ use crate::infrastracture::sqlite::abstracts::{
 };
 
 pub struct ConfigRepository<T: Connectionable> {
-    database: Arc<Mutex<T>>,
+    database: Arc<T>,
 }
 
 impl<T: Connectionable> ConfigRepository<T> {
-    fn new(database: Arc<Mutex<T>>) -> Self {
+    pub fn new(database: Arc<T>) -> Self {
         Self { database }
     }
 }
 
 impl<T: Connectionable> IConfigRepository for ConfigRepository<T> {
     async fn get_config(&self) -> GetConfigResult {
-        let database = self.database.lock();
-
-        if let Err(e) = database {
-            return GetConfigResult::InternalError(e.to_string());
-        }
-
-        let database = database.unwrap();
-
-        match database.connection().await {
+        match self.database.connection().await {
             Ok(mut connection) => {
                 let result: GetConfigResult = sqlx::query_as("SELECT * FROM config")
                     .fetch_optional(&mut *connection)
@@ -44,15 +36,7 @@ impl<T: Connectionable> IConfigRepository for ConfigRepository<T> {
     }
 
     async fn update_server_host(&self, server_host: Option<String>) -> UpdateConfigResult {
-        let database = self.database.lock();
-
-        if let Err(e) = database {
-            return UpdateConfigResult::InternalError(e.to_string());
-        }
-
-        let database = database.unwrap();
-
-        match database.connection().await {
+        match self.database.connection().await {
             Ok(mut connection) => {
                 let result: UpdateConfigResult = sqlx::query("UPDATE config SET server_host = ?")
                     .bind(server_host)

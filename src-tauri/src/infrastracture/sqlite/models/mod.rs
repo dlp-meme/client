@@ -1,4 +1,6 @@
-#[derive(Debug, PartialEq, Eq, Clone, sqlx::FromRow)]
+use serde::Serialize;
+
+#[derive(Debug, PartialEq, Eq, Clone, sqlx::FromRow, Serialize)]
 pub struct Config {
     server_host: Option<String>,
 }

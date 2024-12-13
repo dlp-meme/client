@@ -1,3 +1,4 @@
+import { getConfig } from '@/shared/api';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -6,7 +7,11 @@ export const useConfigStore = defineStore('config', () => {
   const serverHost = ref<string | null>(null);
 
   const loadConfig = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const result = await getConfig();
+
+    console.log(result);
+
+    serverHost.value = result.serverHost;
     isLoaded.value = true;
   };
 

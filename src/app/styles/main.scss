@@ -5,7 +5,6 @@
     --#{$name}-color: #{$color};
   }
 
-  color: var(--text-color);
   box-sizing: border-box;
 
   user-select: none;
@@ -21,8 +20,6 @@ body {
 
   margin: 0;
   position: relative;
-
-  background-color: var(--base-color);
 }
 
 #app, .n-config-provider {

@@ -2,14 +2,15 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
 export const useAppStore = defineStore('app', () => {
-  const loadingStack = ref<void[]>([]);
-  const isLoading = computed(() => loadingStack.value.length > 0);
+  // Счётчик загрузок
+  const loadingCounter = ref<number>(0);
+  const isLoading = computed(() => loadingCounter.value > 0);
 
   const setLoading = (value: boolean) => {
     if (value) {
-      loadingStack.value.push(void value);
+      loadingCounter.value += 1;
     } else {
-      loadingStack.value.pop();
+      loadingCounter.value -= 1;
     }
   };
 

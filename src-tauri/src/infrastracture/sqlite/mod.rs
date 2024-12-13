@@ -2,16 +2,28 @@ pub mod abstracts;
 pub mod models;
 pub mod repositories;
 
+use std::path::PathBuf;
+
 use abstracts::{Connectionable, DatabaseError};
-use sqlx::{pool::PoolConnection, Sqlite, SqlitePool};
+use sqlx::{
+    pool::PoolConnection,
+    sqlite::{SqliteConnectOptions, SqlitePoolOptions},
+    Sqlite, SqlitePool,
+};
 
 pub struct Database {
     pool: SqlitePool,
 }
 
 impl Database {
-    pub async fn new(connection: String) -> Self {
-        let pool = SqlitePool::connect(&connection).await;
+    pub async fn new(filename: PathBuf) -> Self {
+        let options = SqliteConnectOptions::new()
+            .filename(filename)
+            .create_if_missing(true);
+
+        let pool = SqlitePoolOptions::new()
+            .connect_with(options)
+            .await;
 
         match pool {
             Ok(pool) => Self { pool },
