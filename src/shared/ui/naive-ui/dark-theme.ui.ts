@@ -3,6 +3,8 @@ import type { GlobalThemeOverrides } from 'naive-ui';
 
 export const darkTheme: GlobalThemeOverrides = {
   common: {
+    fontFamily: '"Outfit", sans-serif',
+    fontSize: '16px',
     bodyColor: flavors.mocha.colors.base.hex,
     primaryColor: flavors.mocha.colors.blue.hex,
     errorColor: flavors.mocha.colors.red.hex,
@@ -20,6 +22,7 @@ export const darkTheme: GlobalThemeOverrides = {
   },
   Notification: {
     closeBorderRadius: '100%',
+    titleFontSize: '20px',
     textColor: flavors.mocha.colors.text.hex,
     headerTextColor: flavors.mocha.colors.text.hex,
     color: flavors.mocha.colors.surface0.hex,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAppStore } from '@/app/stores/app.store';
-import { useConfigStore } from '@/entities/config/store/config.store';
-import AppHeader from '@/widgets/app/app-header.vue';
+import { useAppStore } from '@app/stores/app.store';
+import { useConfigStore } from '@entities/config/store/config.store';
+import AppHeader from '@widgets/app/app-header.vue';
 import { NScrollbar, NSpin, useNotification } from 'naive-ui';
 import { computed, onMounted } from 'vue';
 
@@ -20,7 +20,7 @@ const loadConfig = async () => {
     console.log(e);
     notification.error({
       title: 'Error',
-      content: 'Failed to load config',
+      content: 'Something went wrong while config loading',
     })
   } finally {
     appStore.setLoading(false);

@@ -1,7 +1,7 @@
 use std::{path::PathBuf, sync::Arc};
 
 use infrastracture::sqlite::{repositories::config::ConfigRepository, Database};
-use tauri::{App, AppHandle, Manager};
+use tauri::{App, Manager};
 
 mod app;
 mod infrastracture;
@@ -32,9 +32,9 @@ fn get_path_to_db(app: &mut App) -> PathBuf {
 
     
     let data_dir = data_dir.unwrap();
-    let sqlite_file = data_dir.join("config.db");
+    
 
-    sqlite_file
+    data_dir.join("config.db")
 }
 
 fn app_setup(app: &mut App) -> std::result::Result<(), Box<dyn std::error::Error>> {
