@@ -3,15 +3,7 @@ use std::future::Future;
 use crate::infrastracture::sqlite::{abstracts::DatabaseError, models::Config};
 
 #[derive(Debug, PartialEq, Eq)]
-pub enum UpdateConfigResult {
-    Ok(()),
-    InternalError(String),
-    DatabaseError(DatabaseError),
-    NotFound,
-}
-
-#[derive(Debug, PartialEq, Eq)]
-pub enum CreateConfigResult {
+pub enum UpsertConfigResult {
     Ok(Config),
     InternalError(String),
     DatabaseError(DatabaseError),
@@ -31,5 +23,5 @@ pub trait IConfigRepository {
     fn upsert_config(
         &self,
         server_host: Option<String>,
-    ) -> impl Future<Output = UpdateConfigResult>;
+    ) -> impl Future<Output = UpsertConfigResult>;
 }

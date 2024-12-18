@@ -1,9 +1,7 @@
 use std::sync::Arc;
 
 use crate::infrastracture::sqlite::abstracts::{
-    repositories::config::{
-        CreateConfigResult, GetConfigResult, IConfigRepository, UpdateConfigResult,
-    },
+    repositories::config::{GetConfigResult, IConfigRepository, UpsertConfigResult},
     Connectionable,
 };
 
@@ -37,21 +35,21 @@ impl<T: Connectionable> IConfigRepository for ConfigRepository<T> {
         }
     }
 
-    async fn upsert_config(&self, server_host: Option<String>) -> UpdateConfigResult {
+    async fn upsert_config(&self, server_host: Option<String>) -> UpsertConfigResult {
         match self.database.connection().await {
             Ok(mut connection) => {
-                let result: UpdateConfigResult =
-                    sqlx::query("REPLACE INTO config (id, server_host) VALUES (1, ?);")
+                let result: UpsertConfigResult =
+                    sqlx::query_as("REPLACE INTO config (id, server_host) VALUES (1, ?);")
                         .bind(server_host)
-                        .execute(&mut *connection)
+                        .fetch_one(&mut *connection)
                         .await
-                        .map(|_| UpdateConfigResult::Ok(()))
-                        .map_err(|e| UpdateConfigResult::InternalError(e.to_string()))
+                        .map(|c| UpsertConfigResult::Ok(c))
+                        .map_err(|e| UpsertConfigResult::InternalError(e.to_string()))
                         .unwrap_or_else(|e| e);
 
                 result
             }
-            Err(e) => UpdateConfigResult::DatabaseError(e),
+            Err(e) => UpsertConfigResult::DatabaseError(e),
         }
     }
 }

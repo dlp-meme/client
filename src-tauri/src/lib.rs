@@ -12,7 +12,7 @@ pub fn run() {
         .setup(app_setup)
         .invoke_handler(tauri::generate_handler![
             app::commands::get_config,
-            app::commands::update_server_host
+            app::commands::upsert_config
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
