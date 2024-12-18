@@ -43,7 +43,7 @@ impl<T: Connectionable> IConfigRepository for ConfigRepository<T> {
                         .bind(server_host)
                         .fetch_one(&mut *connection)
                         .await
-                        .map(|c| UpsertConfigResult::Ok(c))
+                        .map(UpsertConfigResult::Ok)
                         .map_err(|e| UpsertConfigResult::InternalError(e.to_string()))
                         .unwrap_or_else(|e| e);
 

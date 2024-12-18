@@ -1,23 +1,26 @@
 import { getConfig } from '@/shared/api';
+import { upsertConfig } from '@/shared/api/config.api';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useConfigStore = defineStore('config', () => {
-  const isLoaded = ref(false);
   const serverHost = ref<string | null>(null);
 
   const loadConfig = async () => {
     const result = await getConfig();
 
-    console.log(result);
+    serverHost.value = result.serverHost;
+  };
+
+  const replaceConfig = async (host: string) => {
+    const result = await upsertConfig(host);
 
     serverHost.value = result.serverHost;
-    isLoaded.value = true;
   };
 
   return {
-    isLoaded,
     serverHost,
     loadConfig,
+    replaceConfig,
   };
 });

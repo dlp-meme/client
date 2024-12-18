@@ -6,3 +6,9 @@ export const getConfig = async () => {
 
   return ConfigResponseSchema.parse(result);
 };
+
+export const upsertConfig = async (serverHost: string | null) => {
+  const result = await invoke<ConfigResponse>('upsert_config', { serverHost });
+
+  return ConfigResponseSchema.parse(result);
+};
