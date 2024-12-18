@@ -1,7 +1,9 @@
 use std::sync::Arc;
 
 use crate::infrastracture::sqlite::abstracts::{
-    repositories::config::{GetConfigResult, IConfigRepository, UpdateConfigResult},
+    repositories::config::{
+        CreateConfigResult, GetConfigResult, IConfigRepository, UpdateConfigResult,
+    },
     Connectionable,
 };
 
@@ -35,19 +37,17 @@ impl<T: Connectionable> IConfigRepository for ConfigRepository<T> {
         }
     }
 
-    async fn update_server_host(&self, server_host: Option<String>) -> UpdateConfigResult {
+    async fn upsert_config(&self, server_host: Option<String>) -> UpdateConfigResult {
         match self.database.connection().await {
             Ok(mut connection) => {
-                let result: UpdateConfigResult = sqlx::query("UPDATE config SET server_host = ?")
-                    .bind(server_host)
-                    .execute(&mut *connection)
-                    .await
-                    .map(|_| UpdateConfigResult::Ok(()))
-                    .map_err(|e| match e {
-                        sqlx::Error::RowNotFound => UpdateConfigResult::NotFound,
-                        _ => UpdateConfigResult::InternalError(e.to_string()),
-                    })
-                    .unwrap_or_else(|e| e);
+                let result: UpdateConfigResult =
+                    sqlx::query("REPLACE INTO config (id, server_host) VALUES (1, ?);")
+                        .bind(server_host)
+                        .execute(&mut *connection)
+                        .await
+                        .map(|_| UpdateConfigResult::Ok(()))
+                        .map_err(|e| UpdateConfigResult::InternalError(e.to_string()))
+                        .unwrap_or_else(|e| e);
 
                 result
             }

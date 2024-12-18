@@ -1,5 +1,5 @@
 use crate::infrastracture::sqlite::{
-    abstracts::repositories::config::{GetConfigResult, IConfigRepository},
+    abstracts::repositories::config::{GetConfigResult, IConfigRepository, UpdateConfigResult},
     models::Config,
 };
 
@@ -9,13 +9,26 @@ use super::state::GlobalState;
 pub async fn get_config(state: tauri::State<'_, GlobalState>) -> Result<Config, String> {
     let result = state.config_repository.get_config().await;
 
-    let result = match result {
+    match result {
         GetConfigResult::Ok(config) => Ok(config),
         GetConfigResult::NotFound => Err("not_found".to_string()),
         _ => Err("internal_error".to_string()),
-    };
+    }
+}
 
-    drop(state);
+#[tauri::command]
+pub async fn update_server_host(
+    state: tauri::State<'_, GlobalState>,
+    server_host: Option<String>,
+) -> Result<(), String> {
+    let result = state
+        .config_repository
+        .upsert_config(server_host)
+        .await;
 
-    result
+    match result {
+        UpdateConfigResult::Ok(_) => Ok(()),
+        UpdateConfigResult::NotFound => Err("not_found".to_string()),
+        _ => Err("internal_error".to_string()),
+    }
 }

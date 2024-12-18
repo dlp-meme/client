@@ -10,7 +10,10 @@ mod infrastracture;
 pub fn run() {
     tauri::Builder::default()
         .setup(app_setup)
-        .invoke_handler(tauri::generate_handler![app::commands::get_config])
+        .invoke_handler(tauri::generate_handler![
+            app::commands::get_config,
+            app::commands::update_server_host
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -30,9 +33,7 @@ fn get_path_to_db(app: &mut App) -> PathBuf {
         panic!("Failed to resolve path of data directory");
     }
 
-    
     let data_dir = data_dir.unwrap();
-    
 
     data_dir.join("config.db")
 }

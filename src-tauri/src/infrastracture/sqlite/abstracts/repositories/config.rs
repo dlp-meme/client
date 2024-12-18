@@ -11,6 +11,13 @@ pub enum UpdateConfigResult {
 }
 
 #[derive(Debug, PartialEq, Eq)]
+pub enum CreateConfigResult {
+    Ok(Config),
+    InternalError(String),
+    DatabaseError(DatabaseError),
+}
+
+#[derive(Debug, PartialEq, Eq)]
 pub enum GetConfigResult {
     Ok(Config),
     InternalError(String),
@@ -21,7 +28,7 @@ pub enum GetConfigResult {
 pub trait IConfigRepository {
     fn get_config(&self) -> impl Future<Output = GetConfigResult>;
 
-    fn update_server_host(
+    fn upsert_config(
         &self,
         server_host: Option<String>,
     ) -> impl Future<Output = UpdateConfigResult>;
