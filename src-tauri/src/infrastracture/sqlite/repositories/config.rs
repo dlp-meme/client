@@ -39,7 +39,7 @@ impl<T: Connectionable> IConfigRepository for ConfigRepository<T> {
         match self.database.connection().await {
             Ok(mut connection) => {
                 let result: UpsertConfigResult =
-                    sqlx::query_as("REPLACE INTO config (id, server_host) VALUES (1, ?);")
+                    sqlx::query_as("REPLACE INTO config (id, server_host) VALUES (1, ?) RETURNING *;")
                         .bind(server_host)
                         .fetch_one(&mut *connection)
                         .await
