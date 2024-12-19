@@ -13,11 +13,9 @@ import { NAvatar } from 'naive-ui';
 <style scoped lang="scss">
 .app-header {
   width: 100%;
-  background-color: var(--crust-color);
   display: flex;
   padding: 8px;
   align-items: center;
-  border-bottom: 1px solid var(--surface1-color);
 
   &__logo {
     flex-shrink: 0;

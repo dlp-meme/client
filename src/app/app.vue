@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import ConfigCheck from '@/pages/config/config-check.vue';
+import ConfigCheck from '@pages/config/config-check.vue';
+import AppLayout from '@widgets/app/app-layout.vue';
 import { useAppStore } from '@app/stores/app.store';
-import AppHeader from '@widgets/app/app-header.vue';
-import { NScrollbar, NSpin } from 'naive-ui';
+import { NSpin } from 'naive-ui';
 import { storeToRefs } from 'pinia';
 
 const appStore = useAppStore();
@@ -12,11 +12,12 @@ const { isLoading } = storeToRefs(appStore);
 
 <template>
   <config-check>
-    <app-header />
-    <n-scrollbar>
+    <app-layout>
       <router-view></router-view>
-    </n-scrollbar>
+    </app-layout>
+
     <div id="app-modals"></div>
+
     <div v-show="isLoading" class="app-loader">
       <n-spin size="large" />
     </div>

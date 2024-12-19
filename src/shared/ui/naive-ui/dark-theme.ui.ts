@@ -22,6 +22,26 @@ export const darkTheme: GlobalThemeOverrides = {
     borderColor: flavors.mocha.colors.overlay0.hex,
     baseColor: flavors.mocha.colors.base.hex,
   },
+  Layout: {
+    headerColor: flavors.mocha.colors.crust.hex,
+    siderColor: flavors.mocha.colors.crust.hex,
+    headerBorderColor: flavors.mocha.colors.overlay0.hex,
+    siderBorderColor: flavors.mocha.colors.overlay0.hex,
+    siderToggleButtonBorder: `1px solid ${flavors.mocha.colors.overlay0.hex}`,
+    siderToggleButtonIconColor: flavors.mocha.colors.overlay2.hex,
+    siderToggleButtonColor: flavors.mocha.colors.crust.hex,
+  },
+  Menu: {
+    itemColorHover: flavors.mocha.colors.surface0.hex,
+    borderRadius: '8px',
+    peers: {
+      Tooltip: {
+        color: flavors.mocha.colors.surface0.hex,
+        textColor: flavors.mocha.colors.text.hex,
+        borderRadius: '8px',
+      }
+    }
+  },
   Scrollbar: {
     color: flavors.mocha.colors.surface0.hex,
     colorHover: flavors.mocha.colors.surface2.hex,
